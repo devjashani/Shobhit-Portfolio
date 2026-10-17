@@ -4,9 +4,14 @@ import { ArrowDown, ArrowUpRight, Download, Mail } from 'lucide-react';
 import { HeroCanvas } from '../hero/HeroCanvas';
 import { CountUp } from '../CountUp';
 import { LinkedInIcon } from '../icons/LinkedInIcon';
+import { FitText } from '../ui/FitText';
 import { PORTFOLIO_DATA } from '../../data/content';
 
-export const HeroSection: React.FC = () => {
+export interface HeroSectionProps {
+  isReady?: boolean;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ isReady = true }) => {
   const [roleIndex, setRoleIndex] = useState(0);
 
   useEffect(() => {
@@ -15,9 +20,6 @@ export const HeroSection: React.FC = () => {
     }, 2800);
     return () => clearInterval(timer);
   }, []);
-
-  const firstName = "SHOBHIT";
-  const lastName = "NANDWANA";
 
   return (
     <section
@@ -28,13 +30,13 @@ export const HeroSection: React.FC = () => {
       <HeroCanvas />
 
       {/* Main Hero Foreground */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-center py-8">
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-center py-8 lg:pr-[5rem]">
         
         {/* Eyebrow Label */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 0.6, delay: 0.25, ease: 'easeOut' }}
           className="flex items-center gap-2 mb-4"
         >
           <span className="w-2 h-2 rounded-full bg-mint animate-pulse shadow-mint-glow" />
@@ -45,77 +47,53 @@ export const HeroSection: React.FC = () => {
         </motion.div>
 
         {/* Huge Cinematic Display Typography: SHOBHIT NANDWANA */}
-        <div className="relative mb-6">
+        <div className="relative mb-6 w-full max-w-5xl">
           {/* Line 1: SHOBHIT Solid White */}
-          <div className="overflow-hidden leading-[0.9]">
-            <h1 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] tracking-tighter text-white uppercase select-none">
-              {firstName.split('').map((char, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ y: '100%', opacity: 0 }}
-                  animate={{ y: '0%', opacity: 1 }}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.05 + index * 0.04,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block"
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </h1>
+          <div className="overflow-hidden leading-[0.88] w-full">
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={isReady ? { y: '0%' } : { y: '100%' }}
+              transition={{
+                duration: 0.7,
+                delay: 0.0,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              <FitText
+                text="SHOBHIT"
+                maxSize={160}
+                minSize={32}
+                className="font-display font-extrabold tracking-tighter text-white uppercase select-none block"
+              />
+            </motion.div>
           </div>
 
           {/* Line 2: NANDWANA as Outlined Text that fills with Gradient */}
-          <div className="overflow-hidden leading-[0.9]">
-            <h1 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] tracking-tighter text-outline hover:text-outline-active uppercase select-none cursor-default">
-              {lastName.split('').map((char, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ y: '100%', opacity: 0 }}
-                  animate={{ y: '0%', opacity: 1 }}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.25 + index * 0.04,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block text-outline hover:text-outline-active transition-all"
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </h1>
-          </div>
-
-          {/* Rotating Circular Text Badge (Positioned at Top-Right on Desktop) */}
-          <div className="hidden lg:block absolute -top-8 right-0 pointer-events-none">
-            <div className="relative w-36 h-36 flex items-center justify-center animate-spin-slow">
-              <svg className="w-full h-full" viewBox="0 0 140 140">
-                <defs>
-                  <path
-                    id="circlePath"
-                    d="M 70, 70 m -52, 0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"
-                  />
-                </defs>
-                <text className="font-mono text-[9.5px] fill-cyan tracking-[0.22em] uppercase font-semibold">
-                  <textPath href="#circlePath">
-                    OPEN TO ROLES · ASSET MGMT · HEDGE FUNDS · PE · CREDIT ·
-                  </textPath>
-                </text>
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="w-2.5 h-2.5 rounded-full bg-mint shadow-mint-glow" />
-              </div>
-            </div>
+          <div className="overflow-hidden leading-[0.88] w-full">
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={isReady ? { y: '0%' } : { y: '100%' }}
+              transition={{
+                duration: 0.7,
+                delay: 0.08,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              <FitText
+                text="NANDWANA"
+                maxSize={160}
+                minSize={32}
+                className="font-display font-extrabold tracking-tighter text-outline hover:text-outline-active uppercase select-none cursor-default block"
+              />
+            </motion.div>
           </div>
         </div>
 
         {/* Slot Machine Dynamic Word Cycler */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 0.6, delay: 0.35, ease: 'easeOut' }}
           className="flex flex-wrap items-center gap-3 mb-6 font-mono text-sm sm:text-base"
         >
           <span className="text-ink-muted uppercase tracking-wider text-xs sm:text-sm">
@@ -140,8 +118,8 @@ export const HeroSection: React.FC = () => {
         {/* One-Line Intro */}
         <motion.p
           initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 0.6, delay: 0.45, ease: 'easeOut' }}
           className="text-ink-muted text-base sm:text-xl font-normal max-w-2xl leading-relaxed mb-8"
         >
           {PORTFOLIO_DATA.personal.heroIntro}
@@ -150,8 +128,8 @@ export const HeroSection: React.FC = () => {
         {/* Action CTAs & Social Links */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 0.6, delay: 0.55, ease: 'easeOut' }}
           className="flex flex-wrap items-center gap-4"
         >
           {/* View Experience (Solid Quant Gradient) */}
@@ -213,8 +191,35 @@ export const HeroSection: React.FC = () => {
 
       </div>
 
+      {/* Rotating Circular Text Badge (Positioned at Bottom-Right of Hero, 110px, hidden below 1024px) */}
+      <div className="hidden lg:block absolute bottom-36 right-8 lg:right-24 pointer-events-none z-20">
+        <div className="relative w-[110px] h-[110px] flex items-center justify-center animate-spin-slow">
+          <svg className="w-full h-full" viewBox="0 0 140 140">
+            <defs>
+              <path
+                id="circlePath"
+                d="M 70, 70 m -52, 0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"
+              />
+            </defs>
+            <text className="font-mono text-[9.5px] fill-cyan tracking-[0.22em] uppercase font-semibold">
+              <textPath href="#circlePath">
+                OPEN TO ROLES · ASSET MGMT · HEDGE FUNDS · PE · CREDIT ·
+              </textPath>
+            </text>
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="w-2 h-2 rounded-full bg-mint shadow-mint-glow" />
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Full-Width Stats Rail Separated by Hairlines */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto pt-6 border-t border-white/[0.08]">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+        transition={{ duration: 0.6, delay: 0.65, ease: 'easeOut' }}
+        className="relative z-10 w-full max-w-7xl mx-auto pt-6 border-t border-white/[0.08] lg:pr-[5rem]"
+      >
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
           {PORTFOLIO_DATA.heroStats.map((stat, idx) => (
             <div
@@ -223,11 +228,11 @@ export const HeroSection: React.FC = () => {
             >
               <div className="flex items-baseline gap-2 mb-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-mint shadow-mint-glow inline-block" />
-                <div className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">
+                <div className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight whitespace-nowrap">
                   <CountUp end={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
                 </div>
               </div>
-              <p className="font-mono text-[11px] sm:text-xs text-ink-muted uppercase tracking-wider pl-3.5">
+              <p className="font-mono text-[11px] sm:text-xs text-ink-muted uppercase tracking-wider pl-3.5 whitespace-nowrap stat-label">
                 {stat.label}
               </p>
             </div>
@@ -242,7 +247,8 @@ export const HeroSection: React.FC = () => {
           </div>
           <span className="text-[10px] tracking-widest hidden sm:inline">SYSTEM STATUS // 01</span>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
+

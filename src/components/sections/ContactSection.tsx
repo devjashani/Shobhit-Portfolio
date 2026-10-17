@@ -69,7 +69,7 @@ export const ContactSection: React.FC = () => {
       <div className="absolute top-1/4 -right-1/4 w-[50vw] h-[50vw] rounded-full bg-violet/10 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-10 -left-1/4 w-[45vw] h-[45vw] rounded-full bg-cyan/10 blur-[130px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="relative z-10 section-container">
         
         {/* Section Header */}
         <div className="max-w-4xl mb-20">
@@ -78,7 +78,7 @@ export const ContactSection: React.FC = () => {
             <span>06 // INITIATE DIALOGUE</span>
           </div>
 
-          <h2 className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl tracking-tighter text-white leading-[0.95] mb-6">
+          <h2 className="font-display font-extrabold tracking-tighter text-white leading-[0.95] mb-6 section-heading">
             Let's talk{' '}
             <span className="gradient-text inline-block">
               markets.
@@ -102,7 +102,7 @@ export const ContactSection: React.FC = () => {
               className="group py-6 flex items-center justify-between text-left transition-colors"
             >
               <div>
-                <span className="font-mono text-[10px] text-ink-muted uppercase tracking-widest block mb-1">
+                <span className="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-1">
                   DIRECT LINE
                 </span>
                 <p className="font-display font-bold text-xl sm:text-2xl text-white group-hover:text-cyan transition-colors">
@@ -118,11 +118,11 @@ export const ContactSection: React.FC = () => {
             <div className="group py-6 flex items-center justify-between text-left transition-colors">
               <div className="flex-1 min-w-0 pr-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-mono text-[10px] text-ink-muted uppercase tracking-widest">
+                  <span className="font-mono text-xs text-ink-muted uppercase tracking-widest">
                     PRIMARY INBOX
                   </span>
                   {copiedEmail && (
-                    <span className="font-mono text-[10px] text-mint flex items-center gap-1">
+                    <span className="font-mono text-xs text-mint flex items-center gap-1">
                       <Check className="w-3 h-3" /> COPIED!
                     </span>
                   )}
@@ -154,7 +154,7 @@ export const ContactSection: React.FC = () => {
               className="group py-6 flex items-center justify-between text-left transition-colors"
             >
               <div>
-                <span className="font-mono text-[10px] text-ink-muted uppercase tracking-widest block mb-1">
+                <span className="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-1">
                   LINKEDIN PROFILE
                 </span>
                 <p className="font-display font-bold text-xl sm:text-2xl text-white group-hover:text-cyan transition-colors">
@@ -169,7 +169,7 @@ export const ContactSection: React.FC = () => {
             {/* Location */}
             <div className="py-6 flex items-center justify-between text-left">
               <div>
-                <span className="font-mono text-[10px] text-ink-muted uppercase tracking-widest block mb-1">
+                <span className="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-1">
                   GEOGRAPHIC DOMICILE
                 </span>
                 <p className="font-display font-bold text-xl sm:text-2xl text-white">
@@ -211,12 +211,12 @@ export const ContactSection: React.FC = () => {
                 />
                 <label
                   htmlFor="contact-name"
-                  className="absolute left-0 top-0 font-mono text-xs text-ink-muted uppercase tracking-wider transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-cyan peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]"
+                  className="absolute left-0 top-0 font-mono text-xs text-ink-muted uppercase tracking-wider transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-cyan peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs"
                 >
                   Your Name *
                 </label>
                 {errors.name && (
-                  <p className="flex items-center gap-1 font-mono text-[11px] text-coral mt-1">
+                  <p className="flex items-center gap-1 font-mono text-xs text-coral mt-1">
                     <AlertCircle className="w-3 h-3" />
                     <span>{errors.name}</span>
                   </p>
@@ -235,12 +235,12 @@ export const ContactSection: React.FC = () => {
                 />
                 <label
                   htmlFor="contact-email"
-                  className="absolute left-0 top-0 font-mono text-xs text-ink-muted uppercase tracking-wider transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-cyan peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]"
+                  className="absolute left-0 top-0 font-mono text-xs text-ink-muted uppercase tracking-wider transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-cyan peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs"
                 >
                   Institutional Email *
                 </label>
                 {errors.email && (
-                  <p className="flex items-center gap-1 font-mono text-[11px] text-coral mt-1">
+                  <p className="flex items-center gap-1 font-mono text-xs text-coral mt-1">
                     <AlertCircle className="w-3 h-3" />
                     <span>{errors.email}</span>
                   </p>
@@ -259,12 +259,12 @@ export const ContactSection: React.FC = () => {
                 />
                 <label
                   htmlFor="contact-message"
-                  className="absolute left-0 top-2 font-mono text-xs text-ink-muted uppercase tracking-wider transition-all peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-cyan peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[10px]"
+                  className="absolute left-0 top-2 font-mono text-xs text-ink-muted uppercase tracking-wider transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-cyan peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-xs"
                 >
                   Message & Role Scope *
                 </label>
                 {errors.message && (
-                  <p className="flex items-center gap-1 font-mono text-[11px] text-coral mt-1">
+                  <p className="flex items-center gap-1 font-mono text-xs text-coral mt-1">
                     <AlertCircle className="w-3 h-3" />
                     <span>{errors.message}</span>
                   </p>

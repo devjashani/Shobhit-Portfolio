@@ -50,7 +50,7 @@ export const ProjectsSection: React.FC = () => {
         <div className={isMobile ? 'px-4 sm:px-6' : 'sticky top-0 h-screen flex flex-col justify-center overflow-hidden'}>
           
           {/* Section Indicator Bar */}
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 pt-6 pb-4 flex items-center justify-between border-b border-white/[0.08] relative z-20">
+          <div className="section-container w-full pt-6 pb-4 flex items-center justify-between border-b border-white/[0.08] relative z-20">
             <div className="flex items-center gap-2 font-mono text-xs tracking-widest text-mint uppercase">
               <span className="w-2 h-2 rounded-full bg-mint shadow-mint-glow" />
               <span>04 // FEATURED VALUATION & ANALYTICS RESEARCH</span>
@@ -99,7 +99,7 @@ export const ProjectsSection: React.FC = () => {
                       {projA.bullets.map((b, bIdx) => (
                         <div key={bIdx} className="flex items-start gap-2.5">
                           <CheckCircle2 className="w-4 h-4 text-cyan flex-shrink-0 mt-1" />
-                          <p className="text-ink-light/90 text-sm leading-relaxed">{b}</p>
+                          <p className="text-ink-light/90 body-bullet">{b}</p>
                         </div>
                       ))}
                     </div>
@@ -156,7 +156,7 @@ export const ProjectsSection: React.FC = () => {
                           Valuation Corridor Analysis
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 text-ink-muted border border-white/10">
+                      <span className="font-mono text-xs px-2 py-0.5 rounded bg-white/5 text-ink-muted border border-white/10">
                         {projA.illustrativeNote}
                       </span>
                     </div>
@@ -210,7 +210,7 @@ export const ProjectsSection: React.FC = () => {
 
                             {/* Floating Tooltip */}
                             {hoveredBar === rIdx && (
-                              <div className="absolute -top-7 right-0 px-2 py-0.5 rounded bg-midnight-elevated border border-cyan/40 text-[10px] font-mono text-cyan shadow-cyan-glow z-20">
+                              <div className="absolute -top-7 right-0 px-2 py-0.5 rounded bg-midnight-elevated border border-cyan/40 text-xs font-mono text-cyan shadow-cyan-glow z-20">
                                 Median Target: {range.format}{range.mid}
                               </div>
                             )}
@@ -220,7 +220,7 @@ export const ProjectsSection: React.FC = () => {
                     </div>
 
                     {/* Scale Markings */}
-                    <div className="flex justify-between items-center text-[10px] font-mono text-ink-muted/50 mt-6 pt-3 border-t border-white/10">
+                    <div className="flex justify-between items-center text-xs font-mono text-ink-muted/50 mt-6 pt-3 border-t border-white/10">
                       <span>₹420</span>
                       <span>₹500</span>
                       <span className="text-cyan font-semibold">CORRIDOR ₹540–₹565</span>
@@ -258,7 +258,7 @@ export const ProjectsSection: React.FC = () => {
                       {projB.bullets.map((b, bIdx) => (
                         <div key={bIdx} className="flex items-start gap-2.5">
                           <CheckCircle2 className="w-4 h-4 text-mint flex-shrink-0 mt-1" />
-                          <p className="text-ink-light/90 text-sm leading-relaxed">{b}</p>
+                          <p className="text-ink-light/90 body-bullet">{b}</p>
                         </div>
                       ))}
                     </div>
@@ -268,7 +268,7 @@ export const ProjectsSection: React.FC = () => {
                         <span>DATA PIPELINE:</span>
                         <span className="text-mint font-bold">10,000+ TXNS CLEANED</span>
                       </div>
-                      <p className="text-[11px] leading-relaxed">
+                      <p className="text-xs leading-relaxed">
                         Synthesized transactional telemetry to expose revenue drivers, churn risk indicators, and segment contribution margins.
                       </p>
                     </div>
@@ -295,7 +295,7 @@ export const ProjectsSection: React.FC = () => {
                           Executive KPI Telemetry
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 text-ink-muted border border-white/10">
+                      <span className="font-mono text-xs px-2 py-0.5 rounded bg-white/5 text-ink-muted border border-white/10">
                         {projB.illustrativeNote}
                       </span>
                     </div>
@@ -304,7 +304,7 @@ export const ProjectsSection: React.FC = () => {
                       
                       {/* Donut Segment Visual */}
                       <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col items-center">
-                        <span className="font-mono text-[10px] text-ink-muted uppercase tracking-wider mb-2 self-start">
+                        <span className="font-mono text-xs text-ink-muted uppercase tracking-wider mb-2 self-start">
                           Segment Share
                         </span>
                         
@@ -340,11 +340,11 @@ export const ProjectsSection: React.FC = () => {
                           </svg>
                           <div className="absolute inset-0 flex flex-col items-center justify-center">
                             <span className="font-mono font-bold text-sm text-white">10K+</span>
-                            <span className="font-mono text-[8px] text-ink-muted uppercase">Rows</span>
+                            <span className="font-mono text-xs text-ink-muted uppercase">Rows</span>
                           </div>
                         </div>
 
-                        <div className="w-full grid grid-cols-2 gap-1 text-[9px] font-mono mt-2">
+                        <div className="w-full grid grid-cols-2 gap-1 text-xs font-mono mt-2">
                           <span className="flex items-center gap-1 text-violet">
                             <span className="w-1.5 h-1.5 rounded-full bg-violet" /> B2B 44%
                           </span>
@@ -357,10 +357,10 @@ export const ProjectsSection: React.FC = () => {
                       {/* Bar Volume Visual */}
                       <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col justify-between">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="font-mono text-[10px] text-ink-muted uppercase tracking-wider">
+                          <span className="font-mono text-xs text-ink-muted uppercase tracking-wider">
                             Txn Run Rate
                           </span>
-                          <span className="font-mono text-[10px] text-mint font-bold">+34% H1</span>
+                          <span className="font-mono text-xs text-mint font-bold">+34% H1</span>
                         </div>
 
                         <div className="flex items-end justify-between h-24 gap-1.5 pt-2">
@@ -378,7 +378,7 @@ export const ProjectsSection: React.FC = () => {
                                     mIdx === 5 ? 'bg-gradient-quant' : 'bg-white/20 hover:bg-white/30'
                                   }`}
                                 />
-                                <span className="font-mono text-[8px] text-ink-muted">
+                                <span className="font-mono text-xs text-ink-muted">
                                   {mv.month}
                                 </span>
                               </div>
@@ -389,7 +389,7 @@ export const ProjectsSection: React.FC = () => {
 
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-ink-muted">
+                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono text-ink-muted">
                       <span>Visualization Suite: Tableau Enterprise</span>
                       <span className="text-cyan">Interactive Drilldown</span>
                     </div>

@@ -15,17 +15,17 @@ export const SkillsSection: React.FC = () => {
     <section id="skills" className="relative py-24 sm:py-36 border-b border-white/[0.08]">
       
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 mb-16">
+      <div className="section-container mb-16">
         <div className="flex items-center gap-2 font-mono text-xs tracking-widest text-violet uppercase mb-2">
           <span className="w-2 h-2 rounded-full bg-violet" />
           <span>05 // ARSENAL & GOVERNANCE</span>
         </div>
-        <h2 className="font-display font-extrabold text-4xl sm:text-6xl text-white tracking-tight">
+        <h2 className="font-display font-extrabold text-white tracking-tight section-heading">
           Competencies & Credentials
         </h2>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-28">
+      <div className="section-container space-y-28">
         
         {/* Part A: Typographic Skills Index */}
         <div>
@@ -109,7 +109,7 @@ export const SkillsSection: React.FC = () => {
                       <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-cyan">
                         <Award className="w-5 h-5 stroke-[2]" />
                       </div>
-                      <span className="font-mono text-[11px] text-ink-muted px-2.5 py-0.5 rounded bg-white/[0.03] border border-white/5">
+                      <span className="font-mono text-xs text-ink-muted px-2.5 py-0.5 rounded bg-white/[0.03] border border-white/5">
                         {cert.code}
                       </span>
                     </div>
@@ -127,7 +127,7 @@ export const SkillsSection: React.FC = () => {
                       <span className="w-1.5 h-1.5 rounded-full bg-mint shadow-mint-glow" />
                       {cert.verifiedBadge}
                     </span>
-                    <span className="text-[10px]">VERIFIED CREDENTIAL</span>
+                    <span className="text-xs">VERIFIED CREDENTIAL</span>
                   </div>
                 </div>
               </motion.div>
@@ -192,7 +192,7 @@ export const SkillsSection: React.FC = () => {
                           <p className="text-ink-light/90 text-sm sm:text-base leading-relaxed max-w-3xl">
                             {resp.description}
                           </p>
-                          <div className="mt-3 inline-flex items-center gap-2 font-mono text-[11px] text-mint">
+                          <div className="mt-3 inline-flex items-center gap-2 font-mono text-xs text-mint">
                             <span className="w-1.5 h-1.5 rounded-full bg-mint" />
                             <span>MANDATE: {resp.tag}</span>
                           </div>

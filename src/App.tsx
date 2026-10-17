@@ -5,6 +5,7 @@ import { CommandPalette } from './components/ui/CommandPalette';
 import { TopBar } from './components/navigation/TopBar';
 import { DotRail } from './components/navigation/DotRail';
 import { ScrollProgressLine } from './components/navigation/ScrollProgressLine';
+import { Intro } from './components/Intro';
 import { HeroSection } from './components/sections/HeroSection';
 import { AboutSection } from './components/sections/AboutSection';
 import { ExperienceSection } from './components/sections/ExperienceSection';
@@ -14,6 +15,18 @@ import { ContactSection } from './components/sections/ContactSection';
 
 export const App: React.FC = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [introDone, setIntroDone] = useState<boolean>(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return true;
+        return sessionStorage.getItem('sn_intro_seen') === 'true';
+      }
+    } catch {
+      // ignore
+    }
+    return false;
+  });
 
   // Initialize Lenis Smooth Scrolling (respecting reduced motion)
   useEffect(() => {
@@ -55,6 +68,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-[#05060A] text-[#F1F2F6] font-sans selection:bg-violet/30 selection:text-mint">
+      {/* Start-Up Intro Animation Overlay (Runs once per session) */}
+      {!introDone && <Intro onComplete={() => setIntroDone(true)} />}
+
       {/* Desktop Custom Cursor */}
       <CustomCursor />
 
@@ -81,7 +97,7 @@ export const App: React.FC = () => {
 
       {/* Main Single Page Sections */}
       <main className="relative z-10">
-        <HeroSection />
+        <HeroSection isReady={introDone} />
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
@@ -93,3 +109,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+
