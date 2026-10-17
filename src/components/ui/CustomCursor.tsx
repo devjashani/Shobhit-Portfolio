@@ -11,8 +11,15 @@ export const CustomCursor: React.FC = () => {
   const cursorY = useSpring(-100, springConfig);
 
   useEffect(() => {
-    // Only enable on desktop with fine mouse pointer
-    if (window.matchMedia('(pointer: coarse)').matches) return;
+    // Only enable on desktop with fine mouse pointer and width >= 1024px
+    try {
+      if (typeof window === 'undefined') return;
+      const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      const isSmall = window.innerWidth < 1024;
+      if (isCoarse || isSmall) return;
+    } catch {
+      return;
+    }
 
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);

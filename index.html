@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     
     <!-- Primary Meta Tags -->
     <title>Shobhit Nandwana | Finance, Equity Research & Asset Management</title>
@@ -20,7 +20,10 @@
     <meta property="twitter:title" content="Shobhit Nandwana | Finance, Equity Research & Asset Management" />
     <meta property="twitter:description" content="Finance postgraduate (PGDM Finance, IMT Ghaziabad) & Senior Research Fellow at Campus Consortium Foundation." />
 
-    <!-- Google Fonts: Syne, Manrope, IBM Plex Mono -->
+    <!-- Self-Hosted Font Preload: Syne 800 for instant hero typography -->
+    <link rel="preload" href="/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Google Fonts Fallback & Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,7 +32,27 @@
     />
   </head>
   <body class="bg-[#05060A] text-[#F1F2F6] font-sans antialiased selection:bg-[#8B5CF6]/30 selection:text-[#34F5C5] min-h-screen overflow-x-clip">
-    <div id="root"></div>
+    <div id="root">
+      <!-- Minimal First-Paint Inline Fallback (zero flash, instant dark canvas) -->
+      <div style="min-height:100vh;min-height:100dvh;background:#05060A;color:#F1F2F6;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif;padding:24px;text-align:center;">
+        <h1 style="font-size:28px;font-weight:800;letter-spacing:-0.03em;margin:0 0 10px 0;color:#FFFFFF;">SHOBHIT NANDWANA</h1>
+        <p style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#22D3EE;margin:0;font-family:monospace;">Finance · Asset Management · Quantitative Research</p>
+      </div>
+    </div>
+
+    <!-- Noscript Accessible Fallback -->
+    <noscript>
+      <div style="background:#05060A;color:#F1F2F6;padding:2.5rem 1.5rem;text-align:center;font-family:system-ui,-apple-system,sans-serif;max-width:600px;margin:2rem auto;border:1px solid rgba(255,255,255,0.1);border-radius:12px;">
+        <h2 style="font-size:1.5rem;font-weight:800;color:#FFFFFF;margin-bottom:0.75rem;">Shobhit Nandwana Portfolio</h2>
+        <p style="color:#94A3B8;font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem;">
+          PGDM Finance (IMT Ghaziabad) & Senior Research Fellow at Campus Consortium Foundation. Turning quantitative research into high-conviction investment notes.
+        </p>
+        <a href="/Shobhit_Nandwana_CV_Revised.pdf" style="display:inline-block;padding:10px 20px;background:#22D3EE;color:#05060A;font-weight:700;font-size:0.8rem;text-decoration:none;border-radius:6px;font-family:monospace;text-transform:uppercase;letter-spacing:0.05em;">
+          Download Curriculum Vitae (PDF)
+        </a>
+      </div>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -8,6 +8,10 @@ export const ExperienceSection: React.FC = () => {
   const roleRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

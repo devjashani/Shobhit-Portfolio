@@ -8,6 +8,10 @@ interface Ripple {
   time: number;
 }
 
+export interface VolatilitySurface3DProps {
+  onError?: () => void;
+}
+
 const SurfaceMesh: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
@@ -125,15 +129,26 @@ const SurfaceMesh: React.FC = () => {
   );
 };
 
-export const VolatilitySurface3D: React.FC = () => {
+export const VolatilitySurface3D: React.FC<VolatilitySurface3DProps> = ({ onError }) => {
   return (
     <div className="absolute inset-0 pointer-events-auto">
       <Canvas
         camera={{ position: [0, 4, 10], fov: 45 }}
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-        onCreated={({ scene }) => {
+        dpr={[1, 1.5]}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: 'high-performance',
+          failIfMajorPerformanceCaveat: false,
+        }}
+        onCreated={({ scene, gl }) => {
           scene.fog = new THREE.Fog('#05060A', 10, 24);
+          const handleContextLost = (event: Event) => {
+            event.preventDefault();
+            console.warn('WebGL context lost, falling back to 2D');
+            onError?.();
+          };
+          gl.domElement.addEventListener('webglcontextlost', handleContextLost);
         }}
       >
         <SurfaceMesh />

@@ -2,8 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================================
+   SELF-HOSTED FONTS
+   ======================================================== */
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 700 800;
+  font-display: swap;
+  src: url('/fonts/syne-800.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/manrope-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-700.woff2') format('woff2');
+}
+
 :root {
   color-scheme: dark;
+}
+
+/* Viewport height fallbacks for mobile browsers */
+.min-h-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.h-screen {
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
 }
 
 /* Custom Dark Scrollbar */
@@ -117,7 +181,7 @@ body,
 }
 
 /* Section headings (h2, "Let's talk markets.", big outlined words):
-   Container-based units, wrap at word boundaries only, text-wrap: balance */
+   Wrap at word boundaries only, text-wrap: balance */
 h2,
 .section-heading,
 .big-outlined-title {
@@ -125,14 +189,28 @@ h2,
   word-break: normal;
   hyphens: none;
   text-wrap: balance;
-  font-size: clamp(2.25rem, 9cqi, 5.5rem);
+  font-size: clamp(2.25rem, 6vw, 5.5rem);
   line-height: 1.0;
+}
+
+@supports (font-size: 1cqi) {
+  h2,
+  .section-heading,
+  .big-outlined-title {
+    font-size: clamp(2.25rem, 9cqi, 5.5rem);
+  }
 }
 
 /* Education degree titles */
 .degree-title {
-  font-size: clamp(1.25rem, 3cqi, 2rem);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
   line-height: 1.2;
+}
+
+@supports (font-size: 1cqi) {
+  .degree-title {
+    font-size: clamp(1.25rem, 3cqi, 2rem);
+  }
 }
 
 /* About summary scroll-reveal paragraph */
@@ -181,7 +259,15 @@ h2,
 
 @media (min-width: 900px) {
   .about-left-col h2 {
-    font-size: clamp(2.25rem, 6cqi, 4.5rem);
+    font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  }
+}
+
+@supports (font-size: 1cqi) {
+  @media (min-width: 900px) {
+    .about-left-col h2 {
+      font-size: clamp(2.25rem, 6cqi, 4.5rem);
+    }
   }
 }
 
@@ -272,4 +358,3 @@ nav button,
     scroll-behavior: auto !important;
   }
 }
-

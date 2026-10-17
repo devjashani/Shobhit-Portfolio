@@ -22,9 +22,13 @@ export const Intro: React.FC<IntroProps> = ({ onComplete }) => {
       // Ignore storage restrictions (e.g. private mode)
     }
 
-    // Unlock page scroll
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
+    // Always unlock page scroll
+    try {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    } catch {
+      // Ignore DOM issues
+    }
 
     setPhase('done');
     onComplete();
@@ -43,26 +47,75 @@ export const Intro: React.FC<IntroProps> = ({ onComplete }) => {
     }
   }, [phase, triggerOpening, finish]);
 
-  // Initial checks: prefers-reduced-motion or already seen in session
+  // Unconditional unmount cleanup for scroll locking
+  useEffect(() => {
+    return () => {
+      try {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      } catch {
+        // ignore
+      }
+    };
+  }, []);
+
+  // Hard timeout: after 3.5 seconds the overlay is removed and scroll is unlocked, no matter what.
+  useEffect(() => {
+    const hardTimeoutId = setTimeout(() => {
+      finish();
+    }, 3500);
+
+    return () => {
+      clearTimeout(hardTimeoutId);
+      try {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      } catch {
+        // ignore
+      }
+    };
+  }, [finish]);
+
+  // Initial checks: skip entirely on screens under 768px, prefers-reduced-motion, or already seen
   useEffect(() => {
     try {
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const seen = sessionStorage.getItem(STORAGE_KEY) === 'true';
-      if (prefersReduced || seen) {
+      const isUnder768 = typeof window !== 'undefined' && (
+        window.innerWidth < 768 ||
+        (window.matchMedia && window.matchMedia('(max-width: 767px)').matches)
+      );
+      const prefersReduced = typeof window !== 'undefined' && (
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+      let seen = false;
+      try {
+        seen = sessionStorage.getItem(STORAGE_KEY) === 'true';
+      } catch {
+        seen = false; // treat failure as not seen
+      }
+
+      if (isUnder768 || prefersReduced || seen) {
         finish();
         return;
       }
     } catch {
-      // Proceed if storage fails
+      // Proceed if query fails
     }
 
     // Lock page scroll during intro
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    try {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } catch {
+      // ignore
+    }
 
     return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      try {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      } catch {
+        // ignore
+      }
     };
   }, [finish]);
 

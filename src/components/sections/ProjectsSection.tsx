@@ -7,14 +7,26 @@ export const ProjectsSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
   const [hoveredBar, setHoveredBar] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const isTouchOrSmall = () => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      const isSmall = window.innerWidth < 1024;
+      const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      return isCoarse || isSmall || prefersReducedMotion;
+    } catch {
+      return false;
+    }
+  };
+
+  const [isMobile, setIsMobile] = useState<boolean>(() => isTouchOrSmall());
 
   const projA = PORTFOLIO_DATA.projects[0];
   const projB = PORTFOLIO_DATA.projects[1];
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      setIsMobile(isTouchOrSmall());
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -68,7 +80,7 @@ export const ProjectsSection: React.FC = () => {
             className={
               isMobile
                 ? 'space-y-16 pt-10'
-                : 'flex w-[200vw] h-[calc(100vh-80px)] items-center'
+                : 'flex w-[200vw] h-[calc(100vh-80px)] min-h-[calc(100dvh-80px)] items-center'
             }
           >
 

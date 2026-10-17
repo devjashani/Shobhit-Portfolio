@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { CustomCursor } from './components/ui/CustomCursor';
 import { CommandPalette } from './components/ui/CommandPalette';
 import { TopBar } from './components/navigation/TopBar';
@@ -18,9 +19,16 @@ export const App: React.FC = () => {
   const [introDone, setIntroDone] = useState<boolean>(() => {
     try {
       if (typeof window !== 'undefined') {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return true;
-        return sessionStorage.getItem('sn_intro_seen') === 'true';
+        const isUnder768 = window.innerWidth < 768 || (window.matchMedia && window.matchMedia('(max-width: 767px)').matches);
+        const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (isUnder768 || prefersReducedMotion) return true;
+
+        try {
+          return sessionStorage.getItem('sn_intro_seen') === 'true';
+        } catch {
+          // Treat storage access error as not seen
+          return false;
+        }
       }
     } catch {
       // ignore
@@ -28,29 +36,40 @@ export const App: React.FC = () => {
     return false;
   });
 
-  // Initialize Lenis Smooth Scrolling (respecting reduced motion)
+  // Initialize Lenis Smooth Scrolling only on desktop with fine mouse pointer
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    try {
+      if (typeof window === 'undefined') return;
+      const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isTouchOrCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      const isSmallScreen = window.innerWidth < 1024;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-    });
+      // Disable Lenis on touch devices, small screens, and reduced motion
+      if (prefersReducedMotion || isTouchOrCoarse || isSmallScreen) return;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+      });
+
+      let rafId: number;
+      function raf(time: number) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
+
+      rafId = requestAnimationFrame(raf);
+
+      return () => {
+        cancelAnimationFrame(rafId);
+        lenis.destroy();
+      };
+    } catch {
+      // Use native scrolling if Lenis fails to initialize
     }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
   }, []);
 
   // Global Cmd+K / Ctrl+K listener
@@ -69,10 +88,16 @@ export const App: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-[#05060A] text-[#F1F2F6] font-sans selection:bg-violet/30 selection:text-mint">
       {/* Start-Up Intro Animation Overlay (Runs once per session) */}
-      {!introDone && <Intro onComplete={() => setIntroDone(true)} />}
+      {!introDone && (
+        <ErrorBoundary name="Intro" silentFallback onError={() => setIntroDone(true)}>
+          <Intro onComplete={() => setIntroDone(true)} />
+        </ErrorBoundary>
+      )}
 
       {/* Desktop Custom Cursor */}
-      <CustomCursor />
+      <ErrorBoundary name="CustomCursor" silentFallback>
+        <CustomCursor />
+      </ErrorBoundary>
 
       {/* Film Grain Texture Overlay */}
       <div className="film-grain" />
@@ -81,32 +106,56 @@ export const App: React.FC = () => {
       <div className="screen-vignette" />
 
       {/* Top Gradient Scroll Progress Line */}
-      <ScrollProgressLine />
+      <ErrorBoundary name="ScrollProgressLine" silentFallback>
+        <ScrollProgressLine />
+      </ErrorBoundary>
 
       {/* Minimal Top Navigation Bar */}
-      <TopBar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
+      <ErrorBoundary name="TopBar" silentFallback>
+        <TopBar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
+      </ErrorBoundary>
 
       {/* Right-Edge Vertical Dot Rail */}
-      <DotRail />
+      <ErrorBoundary name="DotRail" silentFallback>
+        <DotRail />
+      </ErrorBoundary>
 
       {/* Keyboard Command Palette Modal */}
-      <CommandPalette
-        isOpen={commandPaletteOpen}
-        onClose={() => setCommandPaletteOpen(false)}
-      />
+      <ErrorBoundary name="CommandPalette" silentFallback>
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={() => setCommandPaletteOpen(false)}
+        />
+      </ErrorBoundary>
 
       {/* Main Single Page Sections */}
       <main className="relative z-10">
-        <HeroSection isReady={introDone} />
-        <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <ContactSection />
+        <ErrorBoundary name="HeroSection">
+          <HeroSection isReady={introDone} />
+        </ErrorBoundary>
+
+        <ErrorBoundary name="AboutSection">
+          <AboutSection />
+        </ErrorBoundary>
+
+        <ErrorBoundary name="ExperienceSection">
+          <ExperienceSection />
+        </ErrorBoundary>
+
+        <ErrorBoundary name="ProjectsSection">
+          <ProjectsSection />
+        </ErrorBoundary>
+
+        <ErrorBoundary name="SkillsSection">
+          <SkillsSection />
+        </ErrorBoundary>
+
+        <ErrorBoundary name="ContactSection">
+          <ContactSection />
+        </ErrorBoundary>
       </main>
     </div>
   );
 };
 
 export default App;
-

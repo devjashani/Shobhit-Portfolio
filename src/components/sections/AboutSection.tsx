@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../../data/content';
+import { ErrorBoundary } from '../ui/ErrorBoundary';
 
 // Helper component for word-by-word scroll reveal
 const ScrollWord: React.FC<{ word: string; progress: any; start: number; end: number }> = ({
@@ -154,57 +155,59 @@ export const AboutSection: React.FC = () => {
       </div>
 
       {/* Career Focus: Full-Width Infinite MARQUEE of Giant Outlined Words */}
-      <div className="w-full overflow-hidden select-none py-3.5 border-t border-b border-white/[0.08] bg-black/40">
-        
-        {/* Row 1: Leftward Scroll */}
-        <div className="flex w-[200%] animate-marquee hover:[animation-play-state:paused] mb-2.5">
-          <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase whitespace-nowrap marquee-row-1">
-            <span>ASSET MANAGEMENT</span>
-            <span className="text-violet text-[0.7em] opacity-80">✦</span>
-            <span>HEDGE FUNDS</span>
-            <span className="text-cyan text-[0.7em] opacity-80">✦</span>
-            <span>PRIVATE EQUITY</span>
-            <span className="text-mint text-[0.7em] opacity-80">✦</span>
-            <span>PRIVATE CREDIT</span>
-            <span className="text-violet text-[0.7em] opacity-80">✦</span>
+      <ErrorBoundary name="AboutMarquee" silentFallback>
+        <div className="w-full overflow-hidden select-none py-3.5 border-t border-b border-white/[0.08] bg-black/40">
+          
+          {/* Row 1: Leftward Scroll */}
+          <div className="flex w-[200%] animate-marquee hover:[animation-play-state:paused] mb-2.5">
+            <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase whitespace-nowrap marquee-row-1">
+              <span>ASSET MANAGEMENT</span>
+              <span className="text-violet text-[0.7em] opacity-80">✦</span>
+              <span>HEDGE FUNDS</span>
+              <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+              <span>PRIVATE EQUITY</span>
+              <span className="text-mint text-[0.7em] opacity-80">✦</span>
+              <span>PRIVATE CREDIT</span>
+              <span className="text-violet text-[0.7em] opacity-80">✦</span>
+            </div>
+            <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase pl-6 whitespace-nowrap marquee-row-1">
+              <span>ASSET MANAGEMENT</span>
+              <span className="text-violet text-[0.7em] opacity-80">✦</span>
+              <span>HEDGE FUNDS</span>
+              <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+              <span>PRIVATE EQUITY</span>
+              <span className="text-mint text-[0.7em] opacity-80">✦</span>
+              <span>PRIVATE CREDIT</span>
+              <span className="text-violet text-[0.7em] opacity-80">✦</span>
+            </div>
           </div>
-          <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase pl-6 whitespace-nowrap marquee-row-1">
-            <span>ASSET MANAGEMENT</span>
-            <span className="text-violet text-[0.7em] opacity-80">✦</span>
-            <span>HEDGE FUNDS</span>
-            <span className="text-cyan text-[0.7em] opacity-80">✦</span>
-            <span>PRIVATE EQUITY</span>
-            <span className="text-mint text-[0.7em] opacity-80">✦</span>
-            <span>PRIVATE CREDIT</span>
-            <span className="text-violet text-[0.7em] opacity-80">✦</span>
-          </div>
-        </div>
 
-        {/* Row 2: Rightward Scroll */}
-        <div className="flex w-[200%] animate-marquee-reverse hover:[animation-play-state:paused]">
-          <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase whitespace-nowrap marquee-row-2">
-            <span>EQUITY RESEARCH</span>
-            <span className="text-cyan text-[0.7em] opacity-80">✦</span>
-            <span>VALUATION MODELS</span>
-            <span className="text-mint text-[0.7em] opacity-80">✦</span>
-            <span>FP&A ANALYSIS</span>
-            <span className="text-violet text-[0.7em] opacity-80">✦</span>
-            <span>DUE DILIGENCE</span>
-            <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+          {/* Row 2: Rightward Scroll */}
+          <div className="flex w-[200%] animate-marquee-reverse hover:[animation-play-state:paused]">
+            <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase whitespace-nowrap marquee-row-2">
+              <span>EQUITY RESEARCH</span>
+              <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+              <span>VALUATION MODELS</span>
+              <span className="text-mint text-[0.7em] opacity-80">✦</span>
+              <span>FP&A ANALYSIS</span>
+              <span className="text-violet text-[0.7em] opacity-80">✦</span>
+              <span>DUE DILIGENCE</span>
+              <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+            </div>
+            <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase pl-6 whitespace-nowrap marquee-row-2">
+              <span>EQUITY RESEARCH</span>
+              <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+              <span>VALUATION MODELS</span>
+              <span className="text-mint text-[0.7em] opacity-80">✦</span>
+              <span>FP&A ANALYSIS</span>
+              <span className="text-violet text-[0.7em] opacity-80">✦</span>
+              <span>DUE DILIGENCE</span>
+              <span className="text-cyan text-[0.7em] opacity-80">✦</span>
+            </div>
           </div>
-          <div className="flex shrink-0 items-center gap-6 font-display font-extrabold text-outline tracking-tight uppercase pl-6 whitespace-nowrap marquee-row-2">
-            <span>EQUITY RESEARCH</span>
-            <span className="text-cyan text-[0.7em] opacity-80">✦</span>
-            <span>VALUATION MODELS</span>
-            <span className="text-mint text-[0.7em] opacity-80">✦</span>
-            <span>FP&A ANALYSIS</span>
-            <span className="text-violet text-[0.7em] opacity-80">✦</span>
-            <span>DUE DILIGENCE</span>
-            <span className="text-cyan text-[0.7em] opacity-80">✦</span>
-          </div>
-        </div>
 
-      </div>
+        </div>
+      </ErrorBoundary>
 
     </section>
   );

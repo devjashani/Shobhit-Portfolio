@@ -1,29 +1,37 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { VolatilitySurface2D } from './VolatilitySurface2D';
+import { ErrorBoundary } from '../ui/ErrorBoundary';
 
-// Lazy load 3D component for performance and mobile friendliness
+// Lazy load 3D component for performance and mobile friendliness so Three.js is never loaded on mobile
 const VolatilitySurface3D = React.lazy(() => import('./VolatilitySurface3D'));
 
+function check3DEligibility(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    const isDesktop = window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
+    const isFinePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!isDesktop || !isFinePointer || prefersReducedMotion) {
+      return false;
+    }
+
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    return !!gl;
+  } catch {
+    return false;
+  }
+}
+
 export const HeroCanvas: React.FC = () => {
-  const [use3D, setUse3D] = useState(false);
+  const [use3D, setUse3D] = useState(() => check3DEligibility());
 
   useEffect(() => {
-    // Only load full 3D if on desktop and reduced motion is disabled
-    const isMobile = window.matchMedia('(max-width: 768px)').matches || window.matchMedia('(pointer: coarse)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Check basic WebGL support
-    let hasWebGL = false;
-    try {
-      const canvas = document.createElement('canvas');
-      hasWebGL = !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-    } catch {
-      hasWebGL = false;
-    }
-
-    if (!isMobile && !prefersReducedMotion && hasWebGL) {
-      setUse3D(true);
-    }
+    // Re-verify on resize or orientation change
+    const update = () => setUse3D(check3DEligibility());
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
   }, []);
 
   return (
@@ -35,9 +43,15 @@ export const HeroCanvas: React.FC = () => {
 
       {/* Surface Render: 3D if eligible, otherwise 2D Canvas */}
       {use3D ? (
-        <Suspense fallback={<VolatilitySurface2D />}>
-          <VolatilitySurface3D />
-        </Suspense>
+        <ErrorBoundary
+          name="Hero3D"
+          fallback={<VolatilitySurface2D />}
+          onError={() => setUse3D(false)}
+        >
+          <Suspense fallback={<VolatilitySurface2D />}>
+            <VolatilitySurface3D onError={() => setUse3D(false)} />
+          </Suspense>
+        </ErrorBoundary>
       ) : (
         <VolatilitySurface2D />
       )}
